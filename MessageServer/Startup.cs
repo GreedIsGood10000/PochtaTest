@@ -1,3 +1,4 @@
+using System.Linq;
 using MessageServer.Infrastructure.Db;
 using MessageServer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -28,11 +29,16 @@ namespace MessageServer
             services.AddTransient<IMessageRepository, MessageRepository>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MessageDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            if (dbContext.Database.GetPendingMigrations().Any())
+            {
+                dbContext.Database.Migrate();
             }
 
             app.UseStaticFiles();
