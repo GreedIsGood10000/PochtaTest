@@ -12,5 +12,14 @@ namespace MessageClient.Infrastructure.Entities
         public string MessageText { get; set; }
 
         public bool IsSend { get; set; }
+
+        public static Message Create(string messageText, bool isSent = false)
+        {
+            return new Message
+            {
+                IsSend = isSent,
+                MessageText = messageText
+            };
+        }
     }
 }

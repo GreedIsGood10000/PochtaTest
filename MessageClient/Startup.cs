@@ -1,4 +1,5 @@
 using MessageClient.Infrastructure.Db;
+using MessageClient.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,10 @@ namespace MessageClient
         {
             services.AddMvcCore()
                 .AddMvcOptions(x => x.EnableEndpointRouting = false);
-            services.AddDbContext<MessageDbContext>(x => x.UseSqlServer(_configuration.GetConnectionString("ClientMessagesConnectionString")));
+            services.AddDbContext<MessageDbContext>(x =>
+                x.UseSqlServer(_configuration.GetConnectionString("ClientMessagesConnectionString")));
+
+            services.AddTransient<IMessageRepository, MessageRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
