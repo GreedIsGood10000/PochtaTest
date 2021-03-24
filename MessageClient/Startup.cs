@@ -1,3 +1,4 @@
+using MessageClient.Infrastructure;
 using MessageClient.Infrastructure.Db;
 using MessageClient.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,7 @@ namespace MessageClient
                 x.UseSqlServer(_configuration.GetConnectionString("ClientMessagesConnectionString")));
 
             services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IMessageSender, MessageSender>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
