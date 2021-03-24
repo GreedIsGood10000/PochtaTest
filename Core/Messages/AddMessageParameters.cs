@@ -1,4 +1,4 @@
-﻿namespace MessageServer.Controllers.Parameters
+﻿namespace Core
 {
     public class AddMessageParameters
     {
