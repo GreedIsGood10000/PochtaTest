@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MessageClient.Infrastructure;
 using MessageClient.Infrastructure.Db;
 using MessageClient.Infrastructure.Jobs;
@@ -49,11 +50,16 @@ namespace MessageClient
             services.AddHostedService<QuartzHostedService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MessageDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            if (dbContext.Database.GetPendingMigrations().Any())
+            {
+                dbContext.Database.Migrate();
             }
 
             app.UseStaticFiles();
