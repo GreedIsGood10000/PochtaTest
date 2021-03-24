@@ -27,12 +27,12 @@ namespace MessageClient
 
             services.AddSingleton(configuration);
 
-            services.AddMvcCore()
+            services.AddMvc()
                 .AddMvcOptions(x => x.EnableEndpointRouting = false);
             services.AddDbContext<MessageDbContext>(x =>
                 x.UseSqlServer(configuration.ConnectionString));
-            
-            services.AddHttpClient<HttpClient>(x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
+
+            services.AddHttpClient("httpClient",x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageSender, MessageSender>();
         }

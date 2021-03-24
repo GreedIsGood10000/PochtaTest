@@ -1,5 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Core.AddMessageParameters
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Отправка сообщений</title>
+</head>
+<body>
+<form asp-controller="Home" asp-action="AddMessage" method="post" >
+    <input asp-for="MessageText"/>
+    <button type="submit">Отправить</button>
+</form>
+</body>
+</html>
