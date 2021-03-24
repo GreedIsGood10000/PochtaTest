@@ -35,6 +35,7 @@ namespace MessageServer
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Message}/{action=Index}/{id?}");

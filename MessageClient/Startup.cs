@@ -1,5 +1,4 @@
 using System;
-using System.Net.Http;
 using MessageClient.Infrastructure;
 using MessageClient.Infrastructure.Db;
 using MessageClient.Infrastructure.Repositories;
@@ -32,7 +31,7 @@ namespace MessageClient
             services.AddDbContext<MessageDbContext>(x =>
                 x.UseSqlServer(configuration.ConnectionString));
 
-            services.AddHttpClient("httpClient",x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
+            services.AddHttpClient("httpClient", x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageSender, MessageSender>();
         }
@@ -44,6 +43,7 @@ namespace MessageClient
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseMvc(routes =>
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"));
         }

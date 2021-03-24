@@ -5,11 +5,12 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Отправка сообщений</title>
+    <link rel="stylesheet" asp-href-include="/lib/twitter-bootstrap/css/*.css" />
 </head>
 <body>
-<form asp-controller="Home" asp-action="AddMessage" method="post" >
-    <input asp-for="MessageText"/>
-    <button type="submit">Отправить</button>
-</form>
+    <form asp-controller="Home" asp-action="AddMessage" method="post" class="m-1 p-1">
+        <input asp-for="MessageText" />
+        <button type="submit">Отправить</button>
+    </form>
 </body>
 </html>
