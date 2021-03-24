@@ -1,6 +1,7 @@
 using System;
 using MessageClient.Infrastructure;
 using MessageClient.Infrastructure.Db;
+using MessageClient.Infrastructure.Jobs;
 using MessageClient.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MessageClient
 {
@@ -34,6 +38,15 @@ namespace MessageClient
             services.AddHttpClient("httpClient", x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageSender, MessageSender>();
+
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<MessageSenderJob>();
+            services.AddSingleton(new JobSchedule(
+                typeof(MessageSenderJob),
+                configuration.MessageSenderJobCronTime));
+
+            services.AddHostedService<QuartzHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
