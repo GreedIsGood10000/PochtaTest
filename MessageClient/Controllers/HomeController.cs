@@ -25,7 +25,7 @@ namespace MessageClient.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMessage(AddMessageParameters messageParameters)
+        public async Task<IActionResult> AddMessage([FromBody] AddMessageParameters messageParameters)
         {
             var isSent = await _messageSender.TrySendAsync(messageParameters.MessageText);
 

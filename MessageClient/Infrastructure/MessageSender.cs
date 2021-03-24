@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,8 @@ namespace MessageClient.Infrastructure
 {
     public class MessageSender : IMessageSender
     {
+        private const string JsonContentType = "application/json";
+
         private readonly IConfiguration _configuration;//TODO: use custom config class
         private readonly HttpClient _httpClient;
         private readonly ILogger<MessageSender> _logger;
@@ -33,8 +36,8 @@ namespace MessageClient.Infrastructure
 
                 var serializedParameters = JsonSerializer.Serialize(messageParameters);
 
-                var result = await _httpClient.PostAsync(_configuration["Settings:ServerUrl"],
-                    new StringContent(serializedParameters));
+                var result = await _httpClient.PostAsync(_configuration["Settings:AddMessageUrl"],
+                    new StringContent(serializedParameters, Encoding.UTF8, JsonContentType));
 
                 return result.IsSuccessStatusCode;
             }

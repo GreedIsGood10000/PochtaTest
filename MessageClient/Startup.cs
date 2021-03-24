@@ -26,6 +26,7 @@ namespace MessageClient
             services.AddDbContext<MessageDbContext>(x =>
                 x.UseSqlServer(_configuration.GetConnectionString("ClientMessagesConnectionString")));
 
+            services.AddHttpClient();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageSender, MessageSender>();
         }
