@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
@@ -40,7 +41,7 @@ namespace MessageClient.Infrastructure
 
                 return result.IsSuccessStatusCode;
             }
-            catch (TaskCanceledException e)
+            catch (Exception e) when (e is HttpRequestException || e is TaskCanceledException)
             {
                 _logger.LogWarning($"Произошёл таймаут при обращении к серверу {_configuration.AddMessageUrl}");
                 _logger.LogWarning(e.ToString());
