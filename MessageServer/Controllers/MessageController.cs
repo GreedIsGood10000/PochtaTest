@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using MessageServer.Controllers.Parameters;
 using MessageServer.Infrastructure.Entities;
+using MessageServer.Infrastructure.Extensions;
 using MessageServer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +26,16 @@ namespace MessageServer.Controllers
             await _messageRepository.AddMessage(message);
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ViewResult> Index()
+        {
+            var messages = await _messageRepository.ReadMessages();
+
+            var viewMessages = messages.Select(x => x.GetViewMessage());
+
+            return View(viewMessages);
         }
     }
 }

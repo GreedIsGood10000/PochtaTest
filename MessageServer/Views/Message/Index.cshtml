@@ -1,0 +1,26 @@
+﻿@model IEnumerable<MessageServer.Models.ViewMessage>  
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Список сообщений</title>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>IP отправителя</th>
+            <th>Сообщение</th>
+        </tr>
+    <thead>
+    @foreach (var message in Model)
+    {
+        <tr>
+            <td>@message.IpAddress</td>
+            <td>@message.MessageText</td>
+        </tr>
+    }
+</table>
+</body>
+</html>
