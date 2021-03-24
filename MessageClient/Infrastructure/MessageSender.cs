@@ -12,11 +12,11 @@ namespace MessageClient.Infrastructure
     {
         private const string JsonContentType = "application/json";
 
-        private readonly IConfiguration _configuration;//TODO: use custom config class
+        private readonly MessageServerConfiguration _configuration;
         private readonly HttpClient _httpClient;
         private readonly ILogger<MessageSender> _logger;
 
-        public MessageSender(IConfiguration configuration,
+        public MessageSender(MessageServerConfiguration configuration,
             HttpClient httpClient,
             ILogger<MessageSender> logger)
         {
@@ -36,14 +36,14 @@ namespace MessageClient.Infrastructure
 
                 var serializedParameters = JsonSerializer.Serialize(messageParameters);
 
-                var result = await _httpClient.PostAsync(_configuration["Settings:AddMessageUrl"],
+                var result = await _httpClient.PostAsync(_configuration.AddMessageUrl,
                     new StringContent(serializedParameters, Encoding.UTF8, JsonContentType));
 
                 return result.IsSuccessStatusCode;
             }
             catch (TaskCanceledException e)
             {
-                _logger.LogWarning($"Произошёл таймаут при обращении к серверу {_configuration["Settings:ServerUrl"]}");
+                _logger.LogWarning($"Произошёл таймаут при обращении к серверу {_configuration.AddMessageUrl}");
                 _logger.LogWarning(e.ToString());
                 return false;
             }

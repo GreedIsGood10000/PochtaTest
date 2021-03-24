@@ -1,3 +1,5 @@
+using System;
+using System.Net.Http;
 using MessageClient.Infrastructure;
 using MessageClient.Infrastructure.Db;
 using MessageClient.Infrastructure.Repositories;
@@ -21,12 +23,16 @@ namespace MessageClient
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var configuration = new MessageServerConfiguration(_configuration);
+
+            services.AddSingleton(configuration);
+
             services.AddMvcCore()
                 .AddMvcOptions(x => x.EnableEndpointRouting = false);
             services.AddDbContext<MessageDbContext>(x =>
                 x.UseSqlServer(_configuration.GetConnectionString("ClientMessagesConnectionString")));
-
-            services.AddHttpClient();
+            
+            services.AddHttpClient<HttpClient>(x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageSender, MessageSender>();
         }
