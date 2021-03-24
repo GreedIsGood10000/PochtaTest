@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Core;
-using MessageServer.Controllers.Parameters;
 using MessageServer.Infrastructure.Entities;
 using MessageServer.Infrastructure.Extensions;
 using MessageServer.Infrastructure.Repositories;
