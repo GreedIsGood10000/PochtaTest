@@ -23,7 +23,7 @@ namespace MessageServer.Controllers
         {
             var message = Message.Create(messageText.MessageText, HttpContext.Connection.RemoteIpAddress);
 
-            await _messageRepository.AddMessage(message);
+            await _messageRepository.AddMessageAsync(message);
 
             return Ok();
         }
@@ -31,7 +31,7 @@ namespace MessageServer.Controllers
         [HttpGet]
         public async Task<ViewResult> Index()
         {
-            var messages = await _messageRepository.ReadMessages();
+            var messages = await _messageRepository.ReadMessagesAsync();
 
             var viewMessages = messages.Select(x => x.GetViewMessage());
 

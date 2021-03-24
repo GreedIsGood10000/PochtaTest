@@ -6,8 +6,8 @@ namespace MessageServer.Infrastructure.Repositories
 {
     public interface IMessageRepository
     {
-        Task AddMessage(Message message);
+        Task AddMessageAsync(Message message);
 
-        Task<IEnumerable<Message>> ReadMessages();
+        Task<IEnumerable<Message>> ReadMessagesAsync();
     }
 }

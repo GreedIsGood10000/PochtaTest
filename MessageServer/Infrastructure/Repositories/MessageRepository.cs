@@ -16,13 +16,13 @@ namespace MessageServer.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddMessage(Message message)
+        public async Task AddMessageAsync(Message message)
         {
             _dbContext.Add(message);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Message>> ReadMessages()
+        public async Task<IEnumerable<Message>> ReadMessagesAsync()
         {
             return await _dbContext.Messages.ToArrayAsync();
         }
