@@ -1,4 +1,5 @@
 using MessageServer.Infrastructure.Db;
+using MessageServer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace MessageServer
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDbContext<MessageDbContext>(builder =>
                 builder.UseSqlServer(Configuration.GetConnectionString("MessagesConnectionString")));
+
+            services.AddTransient<IMessageRepository, MessageRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
