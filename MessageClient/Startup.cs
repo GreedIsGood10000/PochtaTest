@@ -30,7 +30,7 @@ namespace MessageClient
             services.AddMvcCore()
                 .AddMvcOptions(x => x.EnableEndpointRouting = false);
             services.AddDbContext<MessageDbContext>(x =>
-                x.UseSqlServer(_configuration.GetConnectionString("ClientMessagesConnectionString")));
+                x.UseSqlServer(configuration.ConnectionString));
             
             services.AddHttpClient<HttpClient>(x => x.Timeout = TimeSpan.FromSeconds(configuration.ConnectionTimeout));
             services.AddTransient<IMessageRepository, MessageRepository>();

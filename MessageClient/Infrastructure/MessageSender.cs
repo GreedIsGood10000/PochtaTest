@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading.Tasks;
 using Core;
-using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
