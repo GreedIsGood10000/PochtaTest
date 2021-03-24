@@ -1,3 +1,4 @@
+using System;
 using MessageServer.Infrastructure.Db;
 using MessageServer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -20,7 +21,8 @@ namespace MessageServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services
+                .AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDbContext<MessageDbContext>(builder =>
                 builder.UseSqlServer(Configuration.GetConnectionString("MessagesConnectionString")));
 
@@ -34,7 +36,10 @@ namespace MessageServer
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Message}/{action=Index}/{id?}");
+            });
         }
     }
 }
