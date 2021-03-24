@@ -1,4 +1,3 @@
-using System;
 using MessageServer.Infrastructure.Db;
 using MessageServer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
